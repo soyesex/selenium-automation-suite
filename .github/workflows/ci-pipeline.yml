@@ -36,11 +36,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Paso 4: Instalar los navegadores que Playwright/Selenium necesita
-      # Selenium Manager debería manejar el driver, pero necesitamos el navegador
-      - name: Install Playwright browsers
-        run: playwright install chrome --with-deps
+      # Paso 4: Instalar una herramienta especializada para instalar Chrome en el runner
+      - name: Setup Chrome Browser
+        uses: browser-actions/setup-chrome@v1
 
       # Paso 5: ¡La prueba de fuego! Ejecutar Pytest
       - name: Run tests with Pytest
-        run: python -m pytest
+        run: python -m pytest --browser chrome --headless
