@@ -2,8 +2,8 @@ from selenium import webdriver
 from page_objects.login_page import LoginPage
 from page_objects.dashboard_page import DashboardPage
 
-def test_successful_login():
-    driver = webdriver.Chrome()
+def test_successful_login(driver):
+    
     driver.get("https://app.staging.datascend.net/auth/login")
     
     login_page = LoginPage(driver)
@@ -14,4 +14,3 @@ def test_successful_login():
     dashboard_page = DashboardPage(driver)
     profile_name = dashboard_page.get_user_profile_name()
     assert profile_name == "Global Administrator"
-    driver.quit()
