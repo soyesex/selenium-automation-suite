@@ -1,0 +1,23 @@
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Carpetas de entorno virtual
+venv/
+env/
+.venv/
+.env/
+
+# Reportes de pruebas y logs
+report.html
+*.log
+
+# Archivos de configuración de IDE
+.idea/
+.vscode/
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,46 @@
+# Nombre de nuestro flujo de trabajo (el nombre del guardián)
+name: Python CI Test Pipeline
+
+# "on" define el disparador (cuándo se activa el guardián)
+on:
+  # Se activará cada vez que hagas "push" a la rama "main"
+  push:
+    branches: ["main"]
+  # También se activará si creas un Pull Request hacia "main"
+  pull_request:
+    branches: ["main"]
+
+# "jobs" define las tareas que hará el guardián
+jobs:
+  # Nombramos nuestro primer y único trabajo como "build"
+  build:
+    # "runs-on" es el tipo de laboratorio que usará (una máquina virtual)
+    # Usaremos la última versión estable de Ubuntu Linux
+    runs-on: ubuntu-latest
+
+    # "steps" es la secuencia de comandos que ejecutará en el laboratorio
+    steps:
+      # Paso 1: Clonar tu código del repositorio al laboratorio
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      # Paso 2: Instalar la versión de Python que necesitamos
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Paso 3: Instalar todas las dependencias de nuestro proyecto
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Paso 4: Instalar los navegadores que Playwright/Selenium necesita
+      # Selenium Manager debería manejar el driver, pero necesitamos el navegador
+      - name: Install Playwright browsers
+        run: playwright install chrome --with-deps
+
+      # Paso 5: ¡La prueba de fuego! Ejecutar Pytest
+      - name: Run tests with Pytest
+        run: python -m pytest
